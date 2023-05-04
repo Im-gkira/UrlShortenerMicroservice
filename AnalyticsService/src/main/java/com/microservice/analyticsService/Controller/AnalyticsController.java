@@ -1,5 +1,6 @@
 package com.microservice.analyticsService.Controller;
 
+import com.microservice.analyticsService.DTO.UrlResponse;
 import com.microservice.analyticsService.Model.AnalyticsModel;
 import com.microservice.analyticsService.Service.AnalyticsService;
 import lombok.Getter;
@@ -21,7 +22,19 @@ public class AnalyticsController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<AnalyticsModel> getAnalytics(@PathVariable String id){
+    public List<AnalyticsModel> getAnalytics(@PathVariable String id) {
         return analyticsService.getAnalytics(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addNewUrl(@RequestBody UrlResponse urlResponse) {
+        analyticsService.addNewUrl(urlResponse);
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void updateClick(@RequestBody UrlResponse urlResponse) throws Exception {
+        analyticsService.updateClick(urlResponse);
     }
 }
