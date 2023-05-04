@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @Setter
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/shortener")
+@RequestMapping("/redirect")
 public class RedirectController {
 
     private final RedirectService redirectService;

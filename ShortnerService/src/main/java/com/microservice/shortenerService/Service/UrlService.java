@@ -34,13 +34,12 @@ public class UrlService {
     private final Base64.Encoder base64 = Base64.getUrlEncoder();
     private final WebClient.Builder webClient;
 
-    private final String analyticsUrl = "http://analytics-service/api/analytics";
+    private final String analyticsUrl = "lb://analytics-service/api/analytics";
 
     @Transactional
     public UrlResponse generateTinyURL(UrlRequest urlRequest) {
         Optional<UrlDataModel> dataModel = urlRepository.findByOrgURL(urlRequest.getOrgURL());
         if (dataModel.isPresent()) {
-            log.info(dataModel.get().getOrgURL());
             return UrlResponse.builder().tinyUrl(dataModel.get().getTinyURL()).build();
         } else if (isValidUrl(urlRequest.getOrgURL())) {
 
@@ -54,7 +53,8 @@ public class UrlService {
             webClient.build().post().uri(analyticsUrl)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(BodyInserters.fromValue(UrlResponse.builder().tinyUrl(tinyUrl).build()))
-                    .exchangeToMono(clientResponse -> clientResponse.bodyToMono(String.class));
+                    .exchangeToMono(clientResponse -> clientResponse.bodyToMono(String.class))
+                    .block();
 
             urlRepository.save(urlDataModel);
             return UrlResponse.builder().tinyUrl(tinyUrl).build();

@@ -23,7 +23,7 @@ import java.util.Optional;
 public class RedirectService {
     private final UrlRepository urlRepository;
     private static final RedirectView redirectView = new RedirectView();
-    private WebClient.Builder webClient;
+    private final WebClient.Builder webClient;
     private final String analyticsUrl = "http://analytics-service/api/analytics";
 
     public RedirectView redirectTo(String hash) throws Exception {

@@ -6,6 +6,7 @@ import com.microservice.analyticsService.Service.AnalyticsService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,15 +16,16 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor
 @RestController
+@Slf4j
 @RequestMapping("/api/analytics")
 public class AnalyticsController {
 
     private final AnalyticsService analyticsService;
 
-    @GetMapping("/{id}")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<AnalyticsModel> getAnalytics(@PathVariable String id) {
-        return analyticsService.getAnalytics(id);
+    public List<AnalyticsModel> getAnalytics() {
+        return analyticsService.getAnalytics();
     }
 
     @PostMapping
@@ -35,6 +37,7 @@ public class AnalyticsController {
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateClick(@RequestBody UrlResponse urlResponse) throws Exception {
+        log.info("Request to aa rahi hai bro!!!!");
         analyticsService.updateClick(urlResponse);
     }
 }

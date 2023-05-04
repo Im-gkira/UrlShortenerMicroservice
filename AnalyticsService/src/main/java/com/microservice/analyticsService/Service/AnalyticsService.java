@@ -6,6 +6,7 @@ import com.microservice.analyticsService.Repository.AnalyticsRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,15 +16,17 @@ import java.util.Optional;
 @Setter
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class AnalyticsService {
 
     private final AnalyticsRepository analyticsRepository;
 
-    public List<AnalyticsModel> getAnalytics(String id){
+    public List<AnalyticsModel> getAnalytics(){
         return analyticsRepository.findAll().stream().toList();
     }
 
     public void addNewUrl(UrlResponse urlResponse){
+        log.info(urlResponse.getTinyUrl());
         analyticsRepository.save(AnalyticsModel.builder().urlId(urlResponse.getTinyUrl()).build());
     }
 

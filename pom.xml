@@ -20,6 +20,7 @@
         <module>RedirectService</module>
         <module>AnalyticsService</module>
         <module>DiscoveryServer</module>
+        <module>ApiGateway</module>
     </modules>
 
     <properties>
